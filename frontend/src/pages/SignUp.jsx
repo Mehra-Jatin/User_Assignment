@@ -35,6 +35,8 @@ function SignUp() {
           const errorData = await response.json(); 
           throw new Error(errorData.error || "Failed to sign up");
         }
+        const responseData = await response.json();
+        localStorage.setItem('userid',responseData.id);
         navigate('/dashboard');
       }
       catch(err){
