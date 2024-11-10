@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -14,8 +14,28 @@ import { Input } from "@/components/ui/input"
 function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-    const handleclick=()=>{
+    const navigate =useNavigate();
+    const handleclick=async()=>{
+      try{
+        const response = await fetch("http://localhost:3000/signin",{
+          method:'POST',
+          headers:{
+            'Content-Type': 'application/json',
+          },
+         body:JSON.stringify({
+            email: email,
+            password: password
+          }),
+        });
+        if (!response.ok) {
+          const errorData = await response.json(); 
+          throw new Error(errorData.error || "Failed to sign up");
+        }
+        navigate('/dashboard');
+      }
+      catch(err){
+       console.error(err.message);
+      }
         
     }
   return (
@@ -34,7 +54,7 @@ function SignIn() {
             <Input  type="password" placeholder="password" onChange={e=>setPassword(e.target.value)}></Input>
         </CardContent>
         <CardContent >
-            <Button className="mx-24">Sign In</Button>
+            <Button className="mx-24" onCLick={handleclick()}>Sign In</Button>
         </CardContent>
         <CardFooter>
            <p className="px-9">Create a new Account?? <Link to={"/signup"} className="underline cursor-pointer">SignUp</Link></p>
