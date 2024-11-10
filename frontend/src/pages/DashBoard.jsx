@@ -3,7 +3,6 @@ import React from 'react'
 import SideBar from '../components/SideBar'
 
 function DashBoard() {
-
   return (
     <div className='w-full h-screen flex'>
         <SideBar ></SideBar>

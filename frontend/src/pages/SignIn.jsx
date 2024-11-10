@@ -54,7 +54,7 @@ function SignIn() {
             <Input  type="password" placeholder="password" onChange={e=>setPassword(e.target.value)}></Input>
         </CardContent>
         <CardContent >
-            <Button className="mx-24" onCLick={handleclick()}>Sign In</Button>
+            <Button className="mx-24" onClick={handleclick}>Sign In</Button>
         </CardContent>
         <CardFooter>
            <p className="px-9">Create a new Account?? <Link to={"/signup"} className="underline cursor-pointer">SignUp</Link></p>
