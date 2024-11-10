@@ -9,7 +9,7 @@ authRouter.post('/signup',async (req, res) => {
                 return res.status(400).send("User already exists");
             }
 
-            await User.create({
+          const response=  await User.create({
                 FirstName: req.body.FirstName,
                 LastName: req.body.LastName,
                 email: req.body.email,
@@ -21,7 +21,7 @@ authRouter.post('/signup',async (req, res) => {
                 city: req.body.city,
                 zip: req.body.zip
             });
-            return res.status(200).send("user signedUp");
+            return res.status(200).send({id:response._id});
      }
         catch(err){
            
@@ -37,7 +37,7 @@ authRouter.post('/signin',async (req, res) => {
           if (!user || user.password !== password) {
             return res.status(400).send({ error: "Invalid Credentials" });
           }     
-           return res.status(200).send("User signed in successfully");
+           return res.status(200).send({id:user._id});
           }
           catch(err){
             return res.status(500).send(err.message);
