@@ -30,4 +30,19 @@ userRoute.put('/update/:id',async (req,res)=>{
         }  
 });
 
+userRoute.get('/about',async (req,res)=>{
+         try{
+          const id=req.query.id;
+          const user= await User.findById(id);
+          if(!user){
+            return res.status(404).send("User not found");
+        }
+        res.json({user});
+ 
+         }
+         catch(err){
+          return res.status(404).send(err.message);
+         } 
+});
+
 export default userRoute;
