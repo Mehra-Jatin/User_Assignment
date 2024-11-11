@@ -1,10 +1,10 @@
 import React from 'react'
-import SideBar from '../components/SideBar';
 import { useSearchParams,useNavigate } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 function User() {
     const [searchParams] = useSearchParams();
     const id=searchParams.get("id");
+    console.log(id);
     const [userData, setUserData] = useState({
         FirstName: '',
         LastName: '',
@@ -43,9 +43,8 @@ function User() {
       navigate(`/update?id=${id}`);
   };
   return (
-    <div className='w-full h-screen flex'>
-            <SideBar Role={userData.role} />
-            <div className='w-[90%] h-full p-[20px]'>
+    <div className='w-full h-screen '>
+            <div className='w-full h-full p-[20px]'>
                 <div className='w-[100%] mx-auto mt-[10px] rounded-sm shadow-black flex p-[20px] items-center' style={{ boxShadow: "0.1px 0.1px 1px" }}>
                     <div className='w-[100px] h-[100px] rounded-full shadow-sm bg-blue-50 shadow-slate-900 justify-center items-center flex text-4xl'>{userData.FirstName[0]}</div>
                     <div className='flex flex-col px-[20px]'>
