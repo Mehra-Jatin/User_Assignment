@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SideBar from '../components/SideBar';
+import { useNavigate } from 'react-router-dom';
 
 function DashBoard() {
     const [userData, setUserData] = useState({
@@ -13,31 +14,36 @@ function DashBoard() {
         city: '',
         zip:''
     });
+   const navigate = useNavigate();
+   useEffect(() => {
+    const id = localStorage.getItem('userid');
+    if (!id) {
+        navigate('/signin');
+        return;
+    }
+    const fetchdata = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/about?id=${id}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            });
 
-    useEffect(() => {
-        const fetchdata = async () => {
-            const id = localStorage.getItem('userid');
-            try {
-                const response = await fetch(`http://localhost:3000/about?id=${id}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error("Failed to fetch user data");
-                }
-
-                const { user } = await response.json();
-                setUserData(user);
-            } catch (err) {
-                console.error(err.message);
+            if (!response.ok) {
+                throw new Error("Failed to fetch user data");
             }
-        };
-        fetchdata();
-    }, []);
 
+            const { user } = await response.json();
+            setUserData(user);
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+    fetchdata();
+}, []);
+
+    const handleClick = () => {
+      navigate(`/update`);
+  };
     return (
         <div className='w-full h-screen flex'>
             <SideBar />
@@ -55,7 +61,7 @@ function DashBoard() {
                 <div className='w-[100%] mx-auto mt-[20px] shadow-black p-[20px] rounded-sm' style={{ boxShadow: "0.1px 0.1px 1px" }}>
                 <div className='flex justify-between items-center'>
                         <p className='font-bold text-[20px]'>Personal Information</p>
-                        <button className='bg-blue-500 text-white px-4 py-2 rounded-sm hover:bg-blue-600'>
+                        <button className='bg-blue-500 text-white px-4 py-2 rounded-sm hover:bg-blue-600' onClick={handleClick}>
                            Edit
                          </button>
                </div>
@@ -69,7 +75,7 @@ function DashBoard() {
                 <div className='w-[100%] mx-auto mt-[20px] shadow-black p-[20px] rounded-sm' style={{ boxShadow: "0.1px 0.1px 1px" }}>
                 <div className='flex justify-between items-center'>
                         <p className='font-bold text-[20px]'>Address</p>
-                        <button className='bg-blue-500 text-white px-4 py-2 rounded-sm hover:bg-blue-600'>
+                        <button className='bg-blue-500 text-white px-4 py-2 rounded-sm hover:bg-blue-600' onClick={handleClick}>
                            Edit
                          </button>
                </div>
