@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -17,11 +17,11 @@ function Update() {
   });
 
   const navigate = useNavigate();
-
+  const [searchParams] =useSearchParams();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const id = localStorage.getItem('userid');
+        let id=searchParams.get('id') ||localStorage.getItem('userid');
         const response = await fetch(`http://localhost:3000/about?id=${id}`, {
           method: 'GET',
           headers: {
@@ -34,6 +34,7 @@ function Update() {
         }
 
         const { user } = await response.json();
+        console.log(user);
         setUserData(user);
       } catch (err) {
         console.error(err.message);
@@ -43,9 +44,9 @@ function Update() {
     fetchData();
   }, []);
 
-  const handleUpdate = async () => {
+  const handleUpdate = async (id) => {
     try {
-      const id = localStorage.getItem('userid');
+      let id = searchParams.get("id") || localStorage.getItem('userid');
       const response = await fetch(`http://localhost:3000/update?id=${id}`, {
         method: 'PUT',
         headers: {

@@ -6,6 +6,7 @@ import SignIn from "./pages/SignIn"
 import DashBoard from "./pages/DashBoard"
 import Bulk from "./pages/Bulk"
 import Update from "./pages/Update"
+import User from "./pages/User"
 function App() {
   return (
     <>
@@ -16,6 +17,7 @@ function App() {
           <Route path="/dashboard" element={<DashBoard/>}/>
           <Route path="/all" element={<Bulk/>}/>
           <Route path='/update' element={<Update/>}/>
+          <Route path='/user' element={<User/>}/>
         </Routes>
       </Router>
     </>
