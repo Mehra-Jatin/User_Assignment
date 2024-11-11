@@ -6,7 +6,7 @@ const userRoute = express.Router();
 userRoute.get('/admin/bulk', async (req,res)=>{
     try{
         const allUser = await User.find();
-        res.json(allUser);
+        res.json({data:allUser});
     }
     catch(err){
         return res.status(500).send(err.message);
@@ -20,7 +20,6 @@ userRoute.put('/update',async (req,res)=>{
           const data = req.body;
           
         const result = await User.updateOne({ _id: userId }, data);
-        console.log(result);
         return res.status(200).send({result});
         }   
         catch(err){
