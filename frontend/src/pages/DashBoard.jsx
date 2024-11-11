@@ -46,7 +46,7 @@ function DashBoard() {
   };
     return (
         <div className='w-full h-screen flex'>
-            <SideBar />
+            <SideBar Role={userData.role} />
             <div className='w-[90%] h-full p-[20px]'>
                 <p className='font-bold text-[20px]'>My Profile</p>
                 <div className='w-[100%] mx-auto mt-[10px] rounded-sm shadow-black flex p-[20px] items-center' style={{ boxShadow: "0.1px 0.1px 1px" }}>
