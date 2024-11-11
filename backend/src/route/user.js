@@ -14,16 +14,14 @@ userRoute.get('/admin/bulk', async (req,res)=>{
        
 });
 
-userRoute.put('/update/:id',async (req,res)=>{
+userRoute.put('/update',async (req,res)=>{
         try{
-          const userId = req.params.id;
+          const userId = req.query.id;
           const data = req.body;
           
-          const result = await User.updateOne({_id:userId},data);
-          if(result){
-            return res.status(500).send("Update successfully");
-          }
-
+        const result = await User.updateOne({ _id: userId }, data);
+        console.log(result);
+        return res.status(200).send({result});
         }   
         catch(err){
             return res.status(500).send(err.message);
